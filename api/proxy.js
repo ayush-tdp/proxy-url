@@ -1,5 +1,14 @@
-// /api/proxy.js
 export default async function handler(req, res) {
+    // Allow requests from any origin (or set a specific one)
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+
+    if (req.method === "OPTIONS") {
+        // CORS preflight
+        return res.status(200).end();
+    }
+
     const targetUrl = req.query.url;
 
     if (!targetUrl) {
